@@ -1,7 +1,9 @@
 package com.pickup.tool;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -20,10 +22,12 @@ public final class DestinationTest {
     }
 
     @Test
-    public void everyDestinationHasLinkData() {
+    public void everyDestinationHasDisplayAndLinkData() {
         for (Destination destination : Destination.values()) {
-            assertEquals(0 < destination.appUris.length, true);
-            assertEquals(destination.webUri.startsWith("https://"), true);
+            assertFalse(destination.label.isEmpty());
+            assertFalse(destination.subtitle.isEmpty());
+            assertTrue(destination.appUris.length > 0);
+            assertTrue(destination.webUri.startsWith("https://"));
         }
     }
 }
