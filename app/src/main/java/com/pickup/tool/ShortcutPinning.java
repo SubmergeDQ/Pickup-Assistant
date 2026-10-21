@@ -44,18 +44,24 @@ final class ShortcutPinning {
     private static int iconFor(Destination destination) {
         switch (destination) {
             case CAINIAO:
-                return R.drawable.ic_shortcut_cainiao;
+                return R.drawable.ic_brand_cainiao;
             case TAOBAO:
             case TAOBAO_PENDING:
-                return R.drawable.ic_shortcut_taobao;
-            case JD:
-                return R.drawable.ic_shortcut_jd;
-            case XHS:
-                return R.drawable.ic_shortcut_xhs;
+                return R.drawable.ic_brand_taobao;
             case PINDUODUO:
             case PINDUODUO_PENDING:
+                return R.drawable.ic_brand_pinduoduo;
+            case JD:
+                return R.drawable.ic_brand_jd;
+            case XHS:
+                return R.drawable.ic_brand_xhs;
+            case MEITUAN:
+                return R.drawable.ic_brand_meituan;
+            case DOUYIN:
+                return R.drawable.ic_brand_douyin;
             default:
-                return R.drawable.ic_shortcut_pinduoduo;
+                // 新增枚举若忘记映射图标，用应用图标兜底，避免误用其它品牌图标。
+                return R.mipmap.ic_launcher;
         }
     }
 }

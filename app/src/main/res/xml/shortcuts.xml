@@ -5,7 +5,7 @@
     tools:targetApi="25">
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/ic_shortcut_cainiao"
+        android:icon="@drawable/ic_brand_cainiao"
         android:shortcutId="cainiao"
         android:shortcutLongLabel="@string/shortcut_cainiao"
         android:shortcutShortLabel="@string/shortcut_cainiao">
@@ -16,7 +16,7 @@
     </shortcut>
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/ic_shortcut_taobao"
+        android:icon="@drawable/ic_brand_taobao"
         android:shortcutId="taobao"
         android:shortcutLongLabel="@string/shortcut_taobao"
         android:shortcutShortLabel="@string/shortcut_taobao">
@@ -27,7 +27,7 @@
     </shortcut>
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/ic_shortcut_pinduoduo"
+        android:icon="@drawable/ic_brand_pinduoduo"
         android:shortcutId="pinduoduo"
         android:shortcutLongLabel="@string/shortcut_pinduoduo"
         android:shortcutShortLabel="@string/shortcut_pinduoduo">
@@ -38,7 +38,7 @@
     </shortcut>
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/ic_shortcut_jd"
+        android:icon="@drawable/ic_brand_jd"
         android:shortcutId="jd"
         android:shortcutLongLabel="@string/shortcut_jd"
         android:shortcutShortLabel="@string/shortcut_jd">
@@ -49,7 +49,7 @@
     </shortcut>
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/ic_shortcut_xhs"
+        android:icon="@drawable/ic_brand_xhs"
         android:shortcutId="xhs"
         android:shortcutLongLabel="@string/shortcut_xhs"
         android:shortcutShortLabel="@string/shortcut_xhs">
@@ -60,7 +60,7 @@
     </shortcut>
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/ic_shortcut_taobao"
+        android:icon="@drawable/ic_brand_taobao"
         android:shortcutId="taobao_pending"
         android:shortcutLongLabel="@string/shortcut_taobao_pending"
         android:shortcutShortLabel="@string/shortcut_taobao_pending">
@@ -71,7 +71,7 @@
     </shortcut>
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/ic_shortcut_pinduoduo"
+        android:icon="@drawable/ic_brand_pinduoduo"
         android:shortcutId="pinduoduo_pending"
         android:shortcutLongLabel="@string/shortcut_pinduoduo_pending"
         android:shortcutShortLabel="@string/shortcut_pinduoduo_pending">
