@@ -65,7 +65,9 @@ public final class MainActivity extends Activity {
         Window window = getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.setDecorFitsSystemWindows(false);
-            WindowInsetsController controller = window.getInsetsController();
+            // setContentView 之前 PhoneWindow 尚未创建 DecorView，
+            // 直接 getInsetsController() 会抛 NPE；先取 DecorView 再获取控制器。
+            WindowInsetsController controller = window.getDecorView().getWindowInsetsController();
             if (controller != null) {
                 int lightBars = WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
                         | WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS;
