@@ -13,18 +13,22 @@
 
 ```
 app/src/main/java/com/pickup/tool/   Android 源码
-  Destination.java                   平台清单与深链/H5 地址（唯一数据源）
+  Destination.java                   平台清单、展示文案与深链/H5 地址（唯一数据源）
   DeepLinkLauncher.java              打开策略与降级逻辑
-  MainActivity.java                  主界面
+  MainActivity.java                  入口解析与深色偏好
+  HomeView.java                      首页视图构建
+  Theme.java                         深浅色调色板
+  Dates.java                         日期展示纯函数
   PickupWidgetProvider.java          桌面小组件
   ShortcutPinning.java               固定快捷方式
   M3.java / SurfaceDrawable.java     Material 3 配色与卡片背景
 app/src/main/res/                    资源（图标、快捷方式、小组件布局）
+app/src/test/java/                   单元测试
 web/                                 静态 PWA
 build_scripts/build_manual.py        不依赖 Gradle 的手工打包脚本
+build_scripts/sync_web.py            从 Destination 生成 Web 入口与 PWA 快捷方式
 docs/screenshots/                    历史版本截图
 dist/                                发布 APK（不入库）
-legacy/                              旧工程源码留档，不参与编译
 ```
 
 ## 构建
@@ -49,12 +53,19 @@ python build_scripts/build_manual.py
 
 手工脚本的 `versionCode`、`versionName` 和 Java 编译级别均从 `app/build.gradle.kts` 读取，不单独维护。
 
+单元测试：
+
+```powershell
+.\gradlew.bat testDebugUnitTest
+```
+
 ## 维护入口
 
-- 新增或调整平台入口：修改 `Destination.java`，再同步 `MainActivity` 的入口列表
+- 新增或调整平台：修改 `Destination.java`；首页入口顺序在 `HomeView.java`，Web 与 PWA 快捷方式运行 `py build_scripts/sync_web.py` 生成
 - 调整桌面快捷方式：`ShortcutPinning.java` 与 `res/xml/shortcuts.xml`
 - 调整桌面小组件：`PickupWidgetProvider.java` 与 `res/layout/pickup_widget.xml`
-- 调整 PWA：`web/index.html` 与 `web/manifest.webmanifest`
+- 调整首页样式：`HomeView.java` 与 `Theme.java`
+- 调整 PWA 静态样式：`web/index.html`（入口区由脚本生成，不要手改标记之间内容）
 
 ## 版本与发布
 
