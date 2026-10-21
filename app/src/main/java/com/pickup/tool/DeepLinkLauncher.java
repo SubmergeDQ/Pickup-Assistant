@@ -18,7 +18,7 @@ final class DeepLinkLauncher {
         if (destination == Destination.DOUYIN) {
             Toast.makeText(
                     context,
-                    "抖音官方并未公开直达链接，请手动点击订单列表",
+                    "抖音没有直达订单页，将尝试打开商城首页",
                     Toast.LENGTH_LONG
             ).show();
         }

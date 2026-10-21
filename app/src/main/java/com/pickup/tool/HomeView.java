@@ -2,6 +2,7 @@ package com.pickup.tool;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Insets;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
@@ -14,6 +15,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowInsets;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -228,7 +230,9 @@ final class HomeView {
     private View buildQuoteLine() {
         Calendar calendar = Calendar.getInstance();
         String weekday = WEEKDAY_CHINESE[calendar.get(Calendar.DAY_OF_WEEK) - 1];
-        String quote = DAILY_QUOTES[calendar.get(Calendar.DAY_OF_YEAR) % DAILY_QUOTES.length];
+        String quote = DAILY_QUOTES[
+                Dates.dailyQuoteIndex(calendar.get(Calendar.DAY_OF_YEAR), DAILY_QUOTES.length)
+        ];
 
         TextView line = text(weekday + "·" + quote, 13, theme.textSecondary, Typeface.NORMAL);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -252,8 +256,7 @@ final class HomeView {
 
         Calendar calendar = Calendar.getInstance();
         int todayDay = calendar.get(Calendar.DAY_OF_MONTH);
-        // 周一为一周起点：Calendar 星期日=1 … 星期六=7，偏移 (dow + 5) % 7。
-        int mondayOffset = (calendar.get(Calendar.DAY_OF_WEEK) + 5) % 7;
+        int mondayOffset = Dates.mondayOffset(calendar.get(Calendar.DAY_OF_WEEK));
         calendar.add(Calendar.DAY_OF_MONTH, -mondayOffset);
 
         for (int index = 0; index < 7; index++) {
@@ -588,16 +591,35 @@ final class HomeView {
     /**
      * 内容避开状态栏、导航栏与刘海；底部署名栏单独承担导航栏内边距。
      */
+    @SuppressWarnings("deprecation")
     private void applyInsets(View root, final LinearLayout content) {
         final int baseTop = dp(12);
         final int contentBottom = dp(18);
         final int horizontal = dp(26);
         root.setOnApplyWindowInsetsListener((view, insets) -> {
+            int left;
+            int top;
+            int right;
+            int bottom;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                Insets bars = insets.getInsets(
+                        WindowInsets.Type.systemBars() | WindowInsets.Type.displayCutout()
+                );
+                left = bars.left;
+                top = bars.top;
+                right = bars.right;
+                bottom = bars.bottom;
+            } else {
+                left = insets.getSystemWindowInsetLeft();
+                top = insets.getSystemWindowInsetTop();
+                right = insets.getSystemWindowInsetRight();
+                bottom = insets.getSystemWindowInsetBottom();
+            }
             content.setPadding(
-                    horizontal + insets.getSystemWindowInsetLeft(),
-                    baseTop + insets.getSystemWindowInsetTop(),
-                    horizontal + insets.getSystemWindowInsetRight(),
-                    contentBottom + insets.getSystemWindowInsetBottom()
+                    horizontal + left,
+                    baseTop + top,
+                    horizontal + right,
+                    contentBottom + bottom
             );
             return insets;
         });

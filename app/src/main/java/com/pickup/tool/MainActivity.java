@@ -1,16 +1,21 @@
 package com.pickup.tool;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowInsetsController;
 
 /**
  * 主界面入口：解析深链跳转请求，维护深浅色偏好，界面构建交给 {@link HomeView}。
  */
 public final class MainActivity extends Activity {
     static final String ACTION_OPEN = "com.pickup.tool.OPEN";
+    /** 静态快捷方式使用的 action 前缀，后缀为 {@link Destination#key} 的大写形式。 */
+    static final String ACTION_OPEN_PREFIX = "com.pickup.tool.OPEN_";
     static final String EXTRA_DESTINATION = "destination";
 
     /** 深浅色偏好存储。 */
@@ -21,6 +26,9 @@ public final class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        darkMode = getSharedPreferences(PREFS_UI, MODE_PRIVATE).getBoolean(PREF_DARK, false);
+        // 必须在 super.onCreate 前切换，深链模式启动瞬间才能匹配深浅色背景。
+        setTheme(darkMode ? R.style.AppTheme_Dark : R.style.AppTheme);
         super.onCreate(savedInstanceState);
 
         Destination destination = destinationFromIntent();
@@ -30,53 +38,44 @@ public final class MainActivity extends Activity {
             return;
         }
 
-        darkMode = getSharedPreferences(PREFS_UI, MODE_PRIVATE).getBoolean(PREF_DARK, false);
         Theme theme = Theme.of(darkMode);
         applyEdgeToEdgeChrome(theme);
         setContentView(new HomeView(this, theme, this::toggleDarkMode).build());
     }
 
+    /**
+     * 小组件与固定快捷方式使用 {@link #ACTION_OPEN} + extra，
+     * res/xml/shortcuts.xml 的静态快捷方式使用 {@link #ACTION_OPEN_PREFIX} + 平台 key。
+     * 新增平台只需在 Destination 中登记，无需再维护 action 分支。
+     */
     private Destination destinationFromIntent() {
-        String action = getIntent().getAction();
+        Intent intent = getIntent();
+        String action = intent.getAction();
         if (ACTION_OPEN.equals(action)) {
-            return Destination.fromKey(getIntent().getStringExtra(EXTRA_DESTINATION));
+            return Destination.fromKey(intent.getStringExtra(EXTRA_DESTINATION));
         }
-        if ("com.pickup.tool.OPEN_CAINIAO".equals(action)) {
-            return Destination.CAINIAO;
-        }
-        if ("com.pickup.tool.OPEN_TAOBAO".equals(action)) {
-            return Destination.TAOBAO;
-        }
-        if ("com.pickup.tool.OPEN_PINDUODUO".equals(action)) {
-            return Destination.PINDUODUO;
-        }
-        if ("com.pickup.tool.OPEN_TAOBAO_PENDING".equals(action)) {
-            return Destination.TAOBAO_PENDING;
-        }
-        if ("com.pickup.tool.OPEN_PINDUODUO_PENDING".equals(action)) {
-            return Destination.PINDUODUO_PENDING;
-        }
-        if ("com.pickup.tool.OPEN_JD".equals(action)) {
-            return Destination.JD;
-        }
-        if ("com.pickup.tool.OPEN_XHS".equals(action)) {
-            return Destination.XHS;
-        }
-        if ("com.pickup.tool.OPEN_MEITUAN".equals(action)) {
-            return Destination.MEITUAN;
-        }
-        if ("com.pickup.tool.OPEN_DOUYIN".equals(action)) {
-            return Destination.DOUYIN;
-        }
-        return null;
+        return Destination.fromAction(action, ACTION_OPEN_PREFIX);
     }
 
     /**
-     * 状态栏与导航栏透明；浅色用深色系统栏图标，深色反之。
+     * 状态栏与导航栏透明；API 30 起使用系统栏控制器，旧版本保留兼容分支。
      */
+    @SuppressWarnings("deprecation")
     private void applyEdgeToEdgeChrome(Theme theme) {
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
-        getWindow().setNavigationBarColor(Color.TRANSPARENT);
+        Window window = getWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.setDecorFitsSystemWindows(false);
+            WindowInsetsController controller = window.getInsetsController();
+            if (controller != null) {
+                int lightBars = WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                        | WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS;
+                controller.setSystemBarsAppearance(theme.dark ? 0 : lightBars, lightBars);
+            }
+            return;
+        }
+
+        window.setStatusBarColor(Color.TRANSPARENT);
+        window.setNavigationBarColor(Color.TRANSPARENT);
         int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
@@ -86,7 +85,7 @@ public final class MainActivity extends Activity {
                 flags |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
             }
         }
-        getWindow().getDecorView().setSystemUiVisibility(flags);
+        window.getDecorView().setSystemUiVisibility(flags);
     }
 
     private void toggleDarkMode() {

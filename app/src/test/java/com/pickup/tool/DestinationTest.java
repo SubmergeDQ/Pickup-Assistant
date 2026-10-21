@@ -22,6 +22,19 @@ public final class DestinationTest {
     }
 
     @Test
+    public void fromActionResolvesStaticShortcutKeys() {
+        String prefix = "com.pickup.tool.OPEN_";
+        assertEquals(Destination.CAINIAO, Destination.fromAction(prefix + "CAINIAO", prefix));
+        assertEquals(
+                Destination.TAOBAO_PENDING,
+                Destination.fromAction(prefix + "TAOBAO_PENDING", prefix)
+        );
+        assertNull(Destination.fromAction("com.pickup.tool.OPEN", prefix));
+        assertNull(Destination.fromAction(prefix + "UNKNOWN", prefix));
+        assertNull(Destination.fromAction(null, prefix));
+    }
+
+    @Test
     public void everyDestinationHasDisplayAndLinkData() {
         for (Destination destination : Destination.values()) {
             assertFalse(destination.label.isEmpty());

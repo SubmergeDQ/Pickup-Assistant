@@ -7,6 +7,8 @@
         <package android:name="com.xunmeng.pinduoduo" />
         <package android:name="com.jingdong.app.mall" />
         <package android:name="com.xingin.xhs" />
+        <package android:name="com.sankuai.meituan" />
+        <package android:name="com.ss.android.ugc.aweme" />
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="cainiao" />

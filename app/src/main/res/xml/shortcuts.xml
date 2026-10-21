@@ -58,26 +58,4 @@
             android:targetClass="com.pickup.tool.MainActivity"
             android:targetPackage="com.pickup.tool" />
     </shortcut>
-    <shortcut
-        android:enabled="true"
-        android:icon="@drawable/ic_brand_taobao"
-        android:shortcutId="taobao_pending"
-        android:shortcutLongLabel="@string/shortcut_taobao_pending"
-        android:shortcutShortLabel="@string/shortcut_taobao_pending">
-        <intent
-            android:action="com.pickup.tool.OPEN_TAOBAO_PENDING"
-            android:targetClass="com.pickup.tool.MainActivity"
-            android:targetPackage="com.pickup.tool" />
-    </shortcut>
-    <shortcut
-        android:enabled="true"
-        android:icon="@drawable/ic_brand_pinduoduo"
-        android:shortcutId="pinduoduo_pending"
-        android:shortcutLongLabel="@string/shortcut_pinduoduo_pending"
-        android:shortcutShortLabel="@string/shortcut_pinduoduo_pending">
-        <intent
-            android:action="com.pickup.tool.OPEN_PINDUODUO_PENDING"
-            android:targetClass="com.pickup.tool.MainActivity"
-            android:targetPackage="com.pickup.tool" />
-    </shortcut>
 </shortcuts>

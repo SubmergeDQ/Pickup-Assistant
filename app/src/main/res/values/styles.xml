@@ -6,7 +6,8 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowBackground">#FBF4EE</item>
+        <!-- 与 Theme.bgTop 一致：深链模式不渲染界面，启动瞬间也不会闪出无关底色。 -->
+        <item name="android:windowBackground">#F2D9D2</item>
         <!-- API 26 以下不支持深色导航栏图标，这里保持深色导航栏配白色图标。 -->
         <item name="android:navigationBarColor">#231A15</item>
         <item name="android:colorAccent">#231A15</item>
@@ -14,4 +15,10 @@
     </style>
 
     <style name="AppTheme" parent="AppThemeBase" />
+
+    <!-- 深色模式启动背景，与 Theme 深色渐变起点一致。 -->
+    <style name="AppTheme.Dark" parent="AppTheme">
+        <item name="android:windowBackground">#241F1C</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
 </resources>

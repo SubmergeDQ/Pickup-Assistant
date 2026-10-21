@@ -2,6 +2,8 @@ package com.pickup.tool;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Calendar;
+
 import org.junit.Test;
 
 public final class DatesTest {
@@ -23,5 +25,18 @@ public final class DatesTest {
         assertEquals("th", Dates.ordinalSuffix(12));
         assertEquals("th", Dates.ordinalSuffix(13));
         assertEquals("th", Dates.ordinalSuffix(111));
+    }
+
+    @Test
+    public void mondayOffsetStartsWeekOnMonday() {
+        assertEquals(0, Dates.mondayOffset(Calendar.MONDAY));
+        assertEquals(6, Dates.mondayOffset(Calendar.SUNDAY));
+        assertEquals(5, Dates.mondayOffset(Calendar.SATURDAY));
+    }
+
+    @Test
+    public void dailyQuoteIndexWrapsByDayOfYear() {
+        assertEquals(0, Dates.dailyQuoteIndex(10, 10));
+        assertEquals(3, Dates.dailyQuoteIndex(13, 10));
     }
 }

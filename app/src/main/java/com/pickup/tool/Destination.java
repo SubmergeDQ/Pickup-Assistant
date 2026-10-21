@@ -176,4 +176,14 @@ enum Destination {
         }
         return null;
     }
+
+    /**
+     * 解析静态快捷方式的 action：前缀之后的部分即平台 key，大小写不敏感。
+     */
+    static Destination fromAction(String action, String prefix) {
+        if (action == null || prefix == null || !action.startsWith(prefix)) {
+            return null;
+        }
+        return fromKey(action.substring(prefix.length()));
+    }
 }

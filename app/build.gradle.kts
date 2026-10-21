@@ -19,8 +19,8 @@ android {
         minSdk = 23
         targetSdk = 35
         // 包名与旧工程不同，属于全新应用，版本号重新起算。
-        versionCode = 210
-        versionName = "2.1.0"
+        versionCode = 300
+        versionName = "3.0"
     }
 
     if (signingPropertiesFile.exists()) {
