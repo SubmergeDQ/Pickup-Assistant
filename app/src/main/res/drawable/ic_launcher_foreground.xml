@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 自适应图标前景层：与 web/icon.svg 一致的紫色包裹和取件码条。
-     原图内容 80x60，缩放到 108x108 画布中央 66x66 安全区：
-     scale=0.825、translateX=1.2、translateY=-0.45，
-     圆形、方形、水滴形遮罩下都不会被切掉。 -->
+     原图内容 80x60，在 108x108 画布中居中并留出背景边：
+     scale=0.65、translateX=12.4、translateY=11.1。
+     启动器圆形遮罩只显示中心约 72x72，内容宽度约占可见区的 72%，
+     避免图形贴边被裁后显得过满。 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
@@ -10,10 +11,10 @@
     android:viewportHeight="108">
 
     <group
-        android:scaleX="0.825"
-        android:scaleY="0.825"
-        android:translateX="1.2"
-        android:translateY="-0.45">
+        android:scaleX="0.65"
+        android:scaleY="0.65"
+        android:translateX="12.4"
+        android:translateY="11.1">
         <path
             android:fillColor="#676CF8"
             android:pathData="M90,36 C97.732,36 104,42.268 104,50 V84 C104,90.6274 98.6274,96 92,96 H36 C29.3726,96 24,90.6274 24,84 V50 C24,42.268 30.268,36 38,36 H55 C56.6569,36 58,37.3431 58,39 V49 C58,50.6569 59.3431,52 61,52 H67 C68.6569,52 70,50.6569 70,49 V39 C70,37.3431 71.3431,36 73,36 H90 Z" />
