@@ -6,6 +6,8 @@ enum Destination {
     CAINIAO(
             "cainiao",
             "菜鸟身份码",
+            "菜鸟驿站取件",
+            "优先打开身份码",
             "菜",
             "com.cainiao.wireless",
             new String[] {
@@ -17,6 +19,8 @@ enum Destination {
     TAOBAO(
             "taobao",
             "淘宝取件码",
+            "淘宝取件",
+            "打开取件码页面",
             "淘",
             "com.taobao.taobao",
             new String[] {
@@ -28,6 +32,8 @@ enum Destination {
     TAOBAO_PENDING(
             "taobao_pending",
             "淘宝待取快递",
+            "淘宝待取快递",
+            "末端驿站待取列表",
             "淘",
             "com.taobao.taobao",
             new String[] {
@@ -39,6 +45,8 @@ enum Destination {
     PINDUODUO(
             "pinduoduo",
             "拼多多身份码",
+            "拼多多取件",
+            "打开拼多多裹裹身份码",
             "拼",
             "com.xunmeng.pinduoduo",
             new String[] {
@@ -51,6 +59,8 @@ enum Destination {
     PINDUODUO_PENDING(
             "pinduoduo_pending",
             "拼多多待取快递",
+            "拼多多待取快递",
+            "包裹待取列表",
             "拼",
             "com.xunmeng.pinduoduo",
             new String[] {
@@ -61,6 +71,8 @@ enum Destination {
     JD(
             "jd",
             "京东待取快递",
+            "京东待取快递",
+            "京东订单列表",
             "京",
             "com.jingdong.app.mall",
             new String[] {
@@ -71,6 +83,8 @@ enum Destination {
     XHS(
             "xhs",
             "小红书待取快递",
+            "小红书待取快递",
+            "小红书订单列表",
             "书",
             "com.xingin.xhs",
             new String[] {
@@ -81,6 +95,8 @@ enum Destination {
     MEITUAN(
             "meituan",
             "美团订单",
+            "美团待取快递",
+            "美团订单列表",
             "美",
             "com.sankuai.meituan",
             new String[] {
@@ -91,6 +107,8 @@ enum Destination {
     DOUYIN(
             "douyin",
             "抖音商城",
+            "抖音待取快递",
+            "抖音商城列表",
             "抖",
             "com.ss.android.ugc.aweme",
             new String[] {
@@ -101,6 +119,10 @@ enum Destination {
 
     final String key;
     final String title;
+    /** 首页入口主标题。 */
+    final String label;
+    /** 首页入口副标题。 */
+    final String subtitle;
     final String mark;
     final String packageName;
     final String[] appUris;
@@ -110,17 +132,21 @@ enum Destination {
     Destination(
             String key,
             String title,
+            String label,
+            String subtitle,
             String mark,
             String packageName,
             String[] appUris,
             String webUri
     ) {
-        this(key, title, mark, packageName, appUris, webUri, false);
+        this(key, title, label, subtitle, mark, packageName, appUris, webUri, false);
     }
 
     Destination(
             String key,
             String title,
+            String label,
+            String subtitle,
             String mark,
             String packageName,
             String[] appUris,
@@ -129,6 +155,8 @@ enum Destination {
     ) {
         this.key = key;
         this.title = title;
+        this.label = label;
+        this.subtitle = subtitle;
         this.mark = mark;
         this.packageName = packageName;
         this.appUris = appUris;

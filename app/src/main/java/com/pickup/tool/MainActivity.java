@@ -213,17 +213,17 @@ public final class MainActivity extends Activity {
         content.addView(buildWeekStrip());
 
         content.addView(sectionHeader("打开身份码", 3));
-        content.addView(entryRow(Destination.CAINIAO, "菜鸟驿站取件", "优先打开身份码"));
-        content.addView(entryRow(Destination.TAOBAO, "淘宝取件", "打开取件码页面"));
-        content.addView(entryRow(Destination.PINDUODUO, "拼多多取件", "打开拼多多裹裹身份码"));
+        content.addView(entryRow(Destination.CAINIAO));
+        content.addView(entryRow(Destination.TAOBAO));
+        content.addView(entryRow(Destination.PINDUODUO));
 
         content.addView(sectionHeader("查看待取", 6));
-        content.addView(entryRow(Destination.TAOBAO_PENDING, "淘宝待取快递", "末端驿站待取列表"));
-        content.addView(entryRow(Destination.PINDUODUO_PENDING, "拼多多待取快递", "包裹待取列表"));
-        content.addView(entryRow(Destination.JD, "京东待取快递", "京东订单列表"));
-        content.addView(entryRow(Destination.XHS, "小红书待取快递", "小红书订单列表"));
-        content.addView(entryRow(Destination.MEITUAN, "美团待取快递", "美团订单列表"));
-        content.addView(entryRow(Destination.DOUYIN, "抖音待取快递", "抖音商城列表"));
+        content.addView(entryRow(Destination.TAOBAO_PENDING));
+        content.addView(entryRow(Destination.PINDUODUO_PENDING));
+        content.addView(entryRow(Destination.JD));
+        content.addView(entryRow(Destination.XHS));
+        content.addView(entryRow(Destination.MEITUAN));
+        content.addView(entryRow(Destination.DOUYIN));
 
         content.addView(sectionHeader("添加到桌面", 0, "需要打开桌面快捷方式权限"));
         content.addView(buildPinRow());
@@ -277,19 +277,7 @@ public final class MainActivity extends Activity {
 
     /** 英文序数后缀：1st / 2nd / 3rd / 4th…，11~13 例外统一用 th。 */
     static String ordinalSuffix(int day) {
-        if (day % 100 >= 11 && day % 100 <= 13) {
-            return "th";
-        }
-        switch (day % 10) {
-            case 1:
-                return "st";
-            case 2:
-                return "nd";
-            case 3:
-                return "rd";
-            default:
-                return "th";
-        }
+        return Dates.ordinalSuffix(day);
     }
 
     private void toggleDarkMode() {
@@ -497,7 +485,7 @@ public final class MainActivity extends Activity {
     /**
      * 入口列表行：官方图标 + 标题 + 副标题 + 双箭头，白卡圆角。
      */
-    private View entryRow(Destination destination, String title, String subtitle) {
+    private View entryRow(Destination destination) {
         LinearLayout row = new LinearLayout(this);
         row.setOrientation(LinearLayout.HORIZONTAL);
         row.setGravity(Gravity.CENTER_VERTICAL);
@@ -526,11 +514,11 @@ public final class MainActivity extends Activity {
         labels.setOrientation(LinearLayout.VERTICAL);
         labels.setPadding(dp(12), 0, 0, 0);
 
-        TextView titleView = text(title, 15, textPrimary, Typeface.BOLD);
+        TextView titleView = text(destination.label, 15, textPrimary, Typeface.BOLD);
         titleView.setSingleLine(true);
         labels.addView(titleView);
 
-        TextView subtitleView = text(subtitle, 11, textSecondary, Typeface.NORMAL);
+        TextView subtitleView = text(destination.subtitle, 11, textSecondary, Typeface.NORMAL);
         subtitleView.setSingleLine(true);
         LinearLayout.LayoutParams subtitleParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
